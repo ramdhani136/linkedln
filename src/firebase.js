@@ -6,11 +6,12 @@ const firebaseConfig = {
   projectId: "linkedin-clone-8e820",
   storageBucket: "linkedin-clone-8e820.appspot.com",
   messagingSenderId: "767151624370",
-  appId: "1:767151624370:web:fbc4422fcfaff8f7d979ab",
+  appId: "1:767151624370:web:fbc4422fcfaff8f7d979ab"
 };
 
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 const db = firebaseApp.firestore();
 const auth = firebaseApp.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
 
-export { db, auth };
+export { db, provider,auth };

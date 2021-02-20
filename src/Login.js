@@ -2,7 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "./features/userSlice";
-import { auth } from "./firebase";
+import { auth, provider } from "./firebase";
 import "./Login.css";
 
 function Login() {
@@ -12,8 +12,34 @@ function Login() {
   const [password, setPassword] = useState("");
   const [profilePic, setProfilePic] = useState("");
 
+  const loginEmail = () => {
+    auth
+      .signInWithPopup(provider)
+      .then((result) => {
+        dispatch(
+          login({
+            displayName: result.user.displayName,
+            photoUrl: result.user.photoURL,
+            uid: result.user.uid,
+            email: result.user.email,
+          })
+        );
+      })
+      .catch((error) => alert(error.message));
+  };
+
   const loginToApp = (e) => {
     e.preventDefault();
+    auth.signInWithEmailAndPassword(email, password).then((userAuth) => {
+      dispatch(
+        login({
+          uid: userAuth.user.uid,
+          displayName: userAuth.user.displayName,
+          email: userAuth.user.email,
+          photoUrl: userAuth.user.photoURL,
+        })
+      );
+    }).catch(error=>alert(error.message))
   };
 
   const register = () => {
@@ -85,6 +111,10 @@ function Login() {
         Not a member?
         <span className="login__register" onClick={register}>
           Register Now
+        </span>{" "}
+        |
+        <span className="login__google" onClick={loginEmail}>
+          With Google Account
         </span>
       </p>
     </div>

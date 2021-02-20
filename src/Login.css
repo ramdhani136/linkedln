@@ -46,3 +46,9 @@ margin-left: 5px;
 .login >  p {
 margin-top:10px
 }
+
+.login__google{
+  color:rgb(247, 94, 77);
+  cursor: pointer;
+  margin-left: 5px;
+}
